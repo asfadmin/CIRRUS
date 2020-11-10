@@ -72,7 +72,6 @@ module "cumulus" {
   archive_api_users = var.api_users
   archive_api_url   = var.archive_api_url
 
-  //  distribution_url            = var.distribution_url
   bucket_map_key              = var.bucket_map_key
 
   sts_credentials_lambda_function_arn = data.aws_lambda_function.sts_credentials.arn
@@ -81,7 +80,6 @@ module "cumulus" {
   private_archive_api_gateway    = var.private_archive_api_gateway
   api_gateway_stage              = var.MATURITY
   //  distribution_api_gateway_stage = var.MATURITY
-  //  log_api_gateway_to_cloudwatch  = var.log_api_gateway_to_cloudwatch
   log_destination_arn            = var.log_destination_arn
 
   deploy_distribution_s3_credentials_endpoint = var.deploy_distribution_s3_credentials_endpoint
@@ -125,7 +123,7 @@ locals {
     Deployment = "${var.DEPLOY_NAME}-cumulus-${var.MATURITY}"
   }
 
-  tea_stack_name = "${pefix}-thin-egress-app"
+  tea_stack_name = "${local.prefix}-thin-egress-app"
   tea_stage_name = "DEV"
 
   vpc_id = data.aws_vpc.application_vpcs.id
