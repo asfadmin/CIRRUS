@@ -81,7 +81,7 @@ module "cumulus" {
   private_archive_api_gateway    = var.private_archive_api_gateway
   api_gateway_stage              = var.MATURITY
   distribution_api_gateway_stage = var.MATURITY
-  log_api_gateway_to_cloudwatch  = var.log_api_gateway_to_cloudwatch
+  //  log_api_gateway_to_cloudwatch  = var.log_api_gateway_to_cloudwatch
   log_destination_arn            = var.log_destination_arn
 
   deploy_distribution_s3_credentials_endpoint = var.deploy_distribution_s3_credentials_endpoint
@@ -191,6 +191,7 @@ module "thin_egress_app" {
   stage_name                 = local.tea_stage_name
   urs_auth_creds_secret_name = aws_secretsmanager_secret.thin_egress_urs_creds.name
   vpc_subnet_ids             = local.lambda_subnet_ids
+  log_api_gateway_to_cloudwatch  = var.log_api_gateway_to_cloudwatch
 }
 
 
