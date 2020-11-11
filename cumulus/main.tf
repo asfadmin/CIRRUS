@@ -148,11 +148,11 @@ data "aws_region" "current" {}
 resource "aws_s3_bucket_object" "bucket_map_yaml" {
   bucket  = local.system_bucket
   key     = "${local.prefix}/thin-egress-app/bucket_map.yaml"
-  content = templatefile("${path.module}/thin-egress-app/bucket_map.yaml.tmpl", {
+  content = templatefile("${path.module}/thin-egress-app/bucket_map.yaml", {
     protected_buckets = local.protected_bucket_names,
     public_buckets = local.public_bucket_names
   })
-  etag    = md5(templatefile("${path.module}/thin-egress-app/bucket_map.yaml.tmpl", {
+  etag    = md5(templatefile("${path.module}/thin-egress-app/bucket_map.yaml", {
     protected_buckets = local.protected_bucket_names,
     public_buckets = local.public_bucket_names
   }))
