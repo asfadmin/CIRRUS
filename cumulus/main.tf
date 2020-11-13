@@ -174,26 +174,14 @@ resource "aws_secretsmanager_secret_version" "thin_egress_urs_creds" {
   })
 }
 
-
 module "thin_egress_app" {
-  source = "s3::https://s3.amazonaws.com/asf.public.code/thin-egress-app/tea-terraform-build.88.zip"
+  source = "https://s3.amazonaws.com/asf.public.code/thin-egress-app/tea-terraform-build.74.zip"
 
-  auth_base_url              = "https://uat.urs.earthdata.nasa.gov"
-  bucket_map_file            = aws_s3_bucket_object.bucket_map_yaml.id
-  bucketname_prefix          = ""
+  bucketname_prefix          = local.prefix  // Will this work?
   config_bucket              = local.system_bucket
-  domain_name                = var.distribution_url == null ? null : replace(replace(var.distribution_url, "/^https?:///", ""), "//$/", "")
-  jwt_secret_name            = local.thin_egress_jwt_secret_name
-  permissions_boundary_name  = var.permissions_boundary_arn == null ? null : reverse(split("/", var.permissions_boundary_arn))[0]
-  private_vpc                = local.vpc_id
-  stack_name                 = local.tea_stack_name
   stage_name                 = local.tea_stage_name
   urs_auth_creds_secret_name = aws_secretsmanager_secret.thin_egress_urs_creds.name
-  vpc_subnet_ids             = local.lambda_subnet_ids
-  log_api_gateway_to_cloudwatch  = var.log_api_gateway_to_cloudwatch
 }
-
-
 
 data "aws_vpc" "application_vpcs" {
   tags = {
