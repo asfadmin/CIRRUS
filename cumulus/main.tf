@@ -145,20 +145,20 @@ provider "aws" {
 data "aws_caller_identity" "current" {}
 data "aws_region" "current" {}
 
-resource "aws_s3_bucket_object" "bucket_map_yaml" {
-  bucket  = local.system_bucket
-  key     = "${local.prefix}-internal/${local.prefix}/thin-egress-app/bucket_map.yaml"
-
-  content = templatefile("${path.module}/thin-egress-app/bucket_map.yaml.tmpl", {
-    protected_buckets = local.protected_bucket_names,
-    public_buckets = local.public_bucket_names
-  })
-  etag    = md5(templatefile("${path.module}/thin-egress-app/bucket_map.yaml.tmpl", {
-    protected_buckets = local.protected_bucket_names,
-    public_buckets = local.public_bucket_names
-  }))
-  tags    = local.default_tags
-}
+//resource "aws_s3_bucket_object" "bucket_map_yaml" {
+//  bucket  = local.system_bucket
+//  key     = "${local.prefix}-internal/${local.prefix}/thin-egress-app/bucket_map.yaml"
+//
+//  content = templatefile("${path.module}/thin-egress-app/bucket_map.yaml.tmpl", {
+//    protected_buckets = local.protected_bucket_names,
+//    public_buckets = local.public_bucket_names
+//  })
+//  etag    = md5(templatefile("${path.module}/thin-egress-app/bucket_map.yaml.tmpl", {
+//    protected_buckets = local.protected_bucket_names,
+//    public_buckets = local.public_bucket_names
+//  }))
+//  tags    = local.default_tags
+//}
 
 resource "aws_secretsmanager_secret" "thin_egress_urs_creds" {
   name_prefix = "${local.prefix}-tea-urs-creds-"
