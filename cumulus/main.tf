@@ -180,7 +180,7 @@ module "thin_egress_app" {
 
   bucketname_prefix          = local.prefix  // Will this work?
   config_bucket              = local.system_bucket
-  stack_name                 = local.tea_stage_name
+  stack_name                 = local.tea_stack_name
   urs_auth_creds_secret_name = aws_secretsmanager_secret.thin_egress_urs_creds.name
 }
 
