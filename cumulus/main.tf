@@ -177,6 +177,7 @@ resource "aws_secretsmanager_secret_version" "thin_egress_urs_creds" {
 module "thin_egress_app" {
   source = "https://s3.amazonaws.com/asf.public.code/thin-egress-app/tea-terraform-build.100.zip"
 
+
   bucketname_prefix          = local.prefix  // Will this work?
   config_bucket              = local.system_bucket
   stack_name                 = local.tea_stage_name
