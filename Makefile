@@ -108,7 +108,7 @@ plan-tf: tf-init
 	terraform plan -input=false -no-color
 
 # ---------------------------
-daac:
+daac: daac-init
 	cd ${DAAC_DIR}
 	make $@
 
