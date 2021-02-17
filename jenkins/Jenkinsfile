@@ -4,8 +4,8 @@ pipeline {
     string(name: 'BUILD_NUM', defaultValue: '${env.BUILD_ID}', description: 'Build number')
     string(name: 'DEPLOY_NAME', defaultValue: '', description: 'The name of the stack for this MATURITY')
 
-    string(name: 'DAAC_REPO', defaultValue: '', description: '')
-    string(name: 'DAAC_REF', defaultValue: 'master', description: '')
+    string(name: 'DAAC_REPO', defaultValue: 'https://github.com/asfadmin/CIRRUS-core', description: '')
+    string(name: 'DAAC_REF', defaultValue: 'dms-PR-2695', description: '')
 
     string(name: 'AWS_REGION', defaultValue: '', description: 'AWS Region to deploy to')
     credentials(
