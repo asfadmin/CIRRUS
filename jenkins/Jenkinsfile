@@ -44,6 +44,7 @@ pipeline {
   // Environment Setup
   environment {
     AWS_PROFILENAME="jenkins"
+    BUILD_NUM="${env.BUILD_ID}"
   } // env
 
   // Build on a slave with docker (for pre-req?)
@@ -85,7 +86,7 @@ pipeline {
                   export AWS_ACCOUNT_ID_LAST4=$(echo -n $AWS_ACCOUNT_ID | tail -c 4)
                   docker run --rm   --user `id -u` \
                                     --env DAAC_DIR="/daac-repo" \
-                                    --env BUILD_NUM="${env.BUILD_ID}" \
+                                    --env BUILD_NUM="${env.BUILD_NUM}" \
                                     --env DEPLOY_NAME="${DEPLOY_NAME}" \
                                     --env MATURITY="${MATURITY}" \
                                     --env AWS_ACCESS_KEY_ID="${AWS_ACCESS_KEY_ID}" \
