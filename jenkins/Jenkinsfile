@@ -102,7 +102,7 @@ pipeline {
                                     --env TF_VAR_token_secret="${TOKEN_SECRET}" \
                                     -v "${WORKSPACE}":/CIRRUS-core \
                                     -v "${WORKSPACE}/daac-repo":/daac-repo \
-                                    --name=cirrus-core \
+                                    echo "********** ${env.BUILD_ID} ***************" \
                                     cirrus-core \
                                     /bin/bash -c "make all"
             '''
