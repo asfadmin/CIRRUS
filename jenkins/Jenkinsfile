@@ -54,6 +54,7 @@ pipeline {
     stage('Start Cumulus Deployment') {
       steps {
         // Send chat notification
+        echo "********** ${env.BUILD_ID} ***************"
         mattermostSend channel: "${CHAT_ROOM}", color: '#EAEA5C', endpoint: "${params.CHAT_HOST}", message: "Build started: ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>). See (<{$env.RUN_CHANGES_DISPLAY_URL}|Changes>)."
       }
     }
