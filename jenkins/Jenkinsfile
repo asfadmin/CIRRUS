@@ -44,6 +44,7 @@ pipeline {
   // Environment Setup
   environment {
     AWS_PROFILENAME="jenkins"
+    BUILD_ID = "${env.BUILD_ID}"
   } // env
 
   // Build on a slave with docker (for pre-req?)
@@ -74,7 +75,6 @@ pipeline {
     }
     stage('Deploy Cumulus within CIRRUS deploy Docker container') {
       environment {
-        BUILD_ID = "${env.BUILD_ID}"
         CMR_CREDS = credentials("${params.CMR_CREDS_ID}")
         URS_CREDS = credentials("${params.URS_CREDS_ID}")
         TOKEN_SECRET = credentials("${params.SECRET_TOKEN_ID}")/**/
