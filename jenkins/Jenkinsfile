@@ -44,6 +44,7 @@ pipeline {
   // Environment Setup
   environment {
     AWS_PROFILENAME="jenkins"
+    BUILD_NUM="${env.BUILD_ID}"
   } // env
 
   // Build on a slave with docker (for pre-req?)
