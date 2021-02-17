@@ -55,7 +55,6 @@ pipeline {
     stage('Start Cumulus Deployment') {
       steps {
         // Send chat notification
-        echo "********** ${env.BUILD_ID} ***************"
         mattermostSend channel: "${CHAT_ROOM}", color: '#EAEA5C', endpoint: "${params.CHAT_HOST}", message: "Build started: ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>). See (<{$env.RUN_CHANGES_DISPLAY_URL}|Changes>)."
       }
     }
@@ -64,7 +63,6 @@ pipeline {
         sh "cd ${WORKSPACE}"
         sh "if [ ! -d \"daac-repo\" ]; then git clone ${params.DAAC_REPO} daac-repo; fi"
         sh "cd daac-repo && git fetch origin --tags && git checkout ${params.DAAC_REF}"
-        sh "echo ${params.DAAC_REF}"
         // If working in a branch, we need to be sure to `git pull` new changes
         sh "cd daac-repo && if [ `git show -s --pretty=%d HEAD | grep -c 'HEAD, tag'` -gt 0 ]; then echo 'Tag is up-to-date'; else git pull; fi && cd .."
         sh 'tree'
@@ -78,10 +76,10 @@ pipeline {
     }
     stage('Deploy Cumulus within CIRRUS deploy Docker container') {
       environment {
+        BUILD_ID = "${env.BUILD_NUM}"
         CMR_CREDS = credentials("${params.CMR_CREDS_ID}")
         URS_CREDS = credentials("${params.URS_CREDS_ID}")
         TOKEN_SECRET = credentials("${params.SECRET_TOKEN_ID}")/**/
-        BUILD_ID = "${env.BUILD_NUM}"
       }
       steps {
         withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: "${params.AWS_CREDS}"]])  {
@@ -90,7 +88,7 @@ pipeline {
                   export AWS_ACCOUNT_ID_LAST4=$(echo -n $AWS_ACCOUNT_ID | tail -c 4)
                   docker run --rm   --user `id -u` \
                                     --env DAAC_DIR="/daac-repo" \
-                                    --env BUILD_NUM="${env.BUILD_ID}" \
+                                    --env BUILD_NUM="${BUILD_ID}" \
                                     --env DEPLOY_NAME="${DEPLOY_NAME}" \
                                     --env MATURITY="${MATURITY}" \
                                     --env AWS_ACCESS_KEY_ID="${AWS_ACCESS_KEY_ID}" \
@@ -104,7 +102,6 @@ pipeline {
                                     --env TF_VAR_token_secret="${TOKEN_SECRET}" \
                                     -v "${WORKSPACE}":/CIRRUS-core \
                                     -v "${WORKSPACE}/daac-repo":/daac-repo \
-                                    echo "********** ${env.BUILD_ID} ***************" \
                                     cirrus-core \
                                     /bin/bash -c "make all"
             '''
