@@ -1,7 +1,6 @@
 pipeline {
   parameters {
     choice(name: 'MATURITY', choices: ['dev', 'int', 'test', 'prod'], description: 'The MATURITY (AWS) account to deploy')
-    string(name: 'BUILD_NUM', defaultValue: '${env.BUILD_ID}', description: 'Build number')
     string(name: 'DEPLOY_NAME', defaultValue: '', description: 'The name of the stack for this MATURITY')
 
     string(name: 'DAAC_REPO', defaultValue: 'https://github.com/asfadmin/CIRRUS-core', description: '')
@@ -45,7 +44,7 @@ pipeline {
   // Environment Setup
   environment {
     AWS_PROFILENAME="jenkins"
-    BUILD_NUM="${params.BUILD_ID}"
+    BUILD_NUM="${env.BUILD_ID}"
   } // env
 
   // Build on a slave with docker (for pre-req?)
