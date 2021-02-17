@@ -6,7 +6,7 @@ pipeline {
     string(name: 'DAAC_REPO', defaultValue: 'https://github.com/asfadmin/CIRRUS-core', description: '')
     string(name: 'DAAC_REF', defaultValue: 'dms-PR-2695', description: '')
 
-    string(name: 'AWS_REGION', defaultValue: '', description: 'AWS Region to deploy to')
+    string(name: 'AWS_REGION', defaultValue: 'us-west-2', description: 'AWS Region to deploy to')
     credentials(
         name: 'AWS_CREDS',
         description: '',
