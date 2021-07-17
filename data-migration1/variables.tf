@@ -9,6 +9,7 @@ variable "MATURITY" {
 
 variable "provider_kms_key_id" {
   type = string
+  default = "44a122f9-ddf7-46e6-a5bc-626ef00b52f9"
 }
 
 # Optional
