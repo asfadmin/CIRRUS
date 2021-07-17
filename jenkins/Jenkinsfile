@@ -103,7 +103,13 @@ pipeline {
                                     -v "${WORKSPACE}/daac-repo":/daac-repo \
                                     --name=cirrus-core \
                                     cirrus-core \
-                                    /bin/bash -c "make cumulus"
+                                    /bin/bash -c "make rds" \
+                                    /bin/bash -c "make data-persistence" \
+                                    /bin/bash -c "make data-migration1" \
+                                    /bin/bash -c "bash scripts/cumulus-v9.2.0/data_migration1.sh" \
+                                    /bin/bash -c "make cumulus" \
+                                    /bin/bash -c "bash scripts/cumulus-v9.2.0/data_migration2.sh"
+                                    /bin/bash -c "make workflows"
             '''
 
         }// withCredentials
